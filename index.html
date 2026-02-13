@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Untitled</title>
+    
+
+  </head>
+    
+  <body>
+  <!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>KimTeamWork Translator V1.0</title>
+    <link rel="stylesheet" href="https://unpkg.com/98.css">
+    <style>
+        body {
+            background-color: #008080; /* สีเขียว Desktop มาตรฐาน */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: "MS Sans Serif", "Tahoma", sans-serif;
+        }
+
+        .window {
+            width: 620px;
+        }
+
+        .window-body {
+            padding: 10px;
+        }
+
+        /* โลโก้ตัวอักษร KIMTEAMWORK แบบคลีนๆ */
+        .logo-display {
+            background: #ffffff;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 2px inset #d2d2d2;
+            text-align: center;
+        }
+
+        .ascii-text {
+            font-family: monospace;
+            font-size: 6px;
+            line-height: 1;
+            color: #000080; /* สีน้ำเงินเข้มมาตรฐานซอฟต์แวร์ */
+            white-space: pre;
+            display: inline-block;
+            text-align: left;
+        }
+
+        /* กรอบการตั้งค่าภาษา */
+        .config-frame {
+            border: 2px groove;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .lang-grid {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .lang-item {
+            flex: 1;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        select, textarea {
+            width: 100%;
+            font-family: "MS Sans Serif", "Tahoma", sans-serif;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            height: 100px;
+            resize: none;
+            background: #fff;
+        }
+
+        .button-layout {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .status-bar-field {
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="window">
+    <div class="title-bar">
+        <div class="title-bar-text">KimTeamWork Translator V1.0</div>
+        <div class="title-bar-controls">
+            <button aria-label="Minimize"></button>
+            <button aria-label="Maximize"></button>
+            <button aria-label="Close"></button>
+        </div>
+    </div>
+
+    <div class="window-body">
+        <div class="logo-display">
+            <div class="ascii-text">
+██╗  ██╗██╗███╗   ███╗████████╗███████╗ █████╗ ███╗   ███╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗
+██║ ██╔╝██║████╗ ████║╚══██╔══╝██╔════╝██╔══██╗████╗ ████║██║    ██║██╔═══██╗██╔══██╗██║ ██╔╝
+█████╔╝ ██║██╔████╔██║   ██║   █████╗  ███████║██╔████╔██║██║ █╗ ██║██║   ██║██████╔╝█████╔╝ 
+██╔═██╗ ██║██║╚██╔╝██║   ██║   ██╔══╝  ██╔══██║██║╚██╔╝██║██║███╗██║██║   ██║██╔══██╗██╔═██╗ 
+██║  ██╗██║██║ ╚═╝ ██║   ██║   ███████╗██║  ██║██║ ╚═╝ ██║╚███╔███╔╝╚██████╔╝██║  ██║██║  ██╗
+╚═╝  ╚═╝╚═╝╚═╝     ╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝ ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+            </div>
+        </div>
+
+        <div class="config-frame">
+            <div class="lang-grid">
+                <div class="lang-item">
+                    <label for="src">Translate from:</label>
+                    <select id="src">
+                        <option value="th">Thai</option>
+                        <option value="en" selected>English</option>
+                        <option value="ja">Japanese</option>
+                    </select>
+                </div>
+                <div style="padding-top: 20px; font-weight: bold;">➔</div>
+                <div class="lang-item">
+                    <label for="tgt">Translate to:</label>
+                    <select id="tgt">
+                        <option value="th" selected>Thai</option>
+                        <option value="en">English</option>
+                        <option value="ja">Japanese</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <label for="txt-in">Input Text:</label>
+        <textarea id="txt-in" placeholder="Enter text here..."></textarea>
+
+        <div class="button-layout">
+            <button id="do-translate">Translate</button>
+            <button id="do-clear">Clear</button>
+        </div>
+
+        <label for="txt-out">Output Text:</label>
+        <textarea id="txt-out" readonly></textarea>
+
+        <div class="status-bar">
+            <p class="status-bar-field" id="stat-text">Status: Ready</p>
+            <p class="status-bar-field">Manual Select Mode</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    const btnTrans = document.getElementById('do-translate');
+    const btnClear = document.getElementById('do-clear');
+    const input = document.getElementById('txt-in');
+    const output = document.getElementById('txt-out');
+    const sourceLang = document.getElementById('src');
+    const targetLang = document.getElementById('tgt');
+    const status = document.getElementById('stat-text');
+
+    btnTrans.onclick = async () => {
+        if (!input.value.trim()) {
+            alert("Error: No text detected.");
+            return;
+        }
+
+        status.innerText = "Status: Connecting...";
+        output.value = "Translating...";
+
+        try {
+            const pair = `${sourceLang.value}|${targetLang.value}`;
+            const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(input.value)}&langpair=${pair}`;
+            const res = await fetch(url);
+            const data = await res.json();
+            
+            if (data.responseData) {
+                output.value = data.responseData.translatedText;
+                status.innerText = "Status: Done";
+            }
+        } catch (e) {
+            status.innerText = "Status: Link Failure";
+            alert("Connection error.");
+        }
+    };
+
+    btnClear.onclick = () => {
+        input.value = "";
+        output.value = "";
+        status.innerText = "Status: Ready";
+    };
+</script>
+
+</body>
+</html>
+    
+  </body>
+  
+</html>
